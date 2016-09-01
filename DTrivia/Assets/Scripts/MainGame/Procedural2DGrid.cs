@@ -11,10 +11,10 @@ public class Procedural2DGrid : MonoBehaviour {
 
     public Transform Grid;
 
-    void Init()
+    public void Init(int rSize, int cSize)
     {
-        rowSize = 3;
-        columnSize = 4;
+        rowSize = rSize;
+        columnSize = cSize;
     }
 
     void ClearGrid()
@@ -28,7 +28,7 @@ public class Procedural2DGrid : MonoBehaviour {
     public void GenerateGrid()
     {
         ClearGrid();
-        Init();
+        Init(4,4);
         GameObject cellInputField;
         RectTransform rowParent;
         for (int rowIndex = 0; rowIndex < rowSize; rowIndex++)
