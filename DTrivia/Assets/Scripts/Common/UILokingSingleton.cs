@@ -7,35 +7,29 @@ public class UILokingSingleton : MonoBehaviour {
 
     public GameObject _PanelActivity;
 
+    public int rSize = 0, cSize = 0;
+
     private AsyncOperation asyncOp = null;
-    private static volatile UILokingSingleton instance;
-    private static object _locker = new Object();
+    private static volatile UILokingSingleton instance;    
 
     public static UILokingSingleton Instance
     {
         get
         {
-            if (instance == null)
-            {
-                lock (_locker)
-                {
-                    if (instance == null) instance = SingletonInit();
-                }
-            }
             return instance;
         }
     }
 
     void Awake()
     {
+        if (instance)
+        {
+            DestroyImmediate(gameObject);
+            return;
+        }
+        instance = this;
+        DontDestroyOnLoad(gameObject);
         _PanelActivity.SetActive(false);
-    }
-
-    private static UILokingSingleton SingletonInit()
-    {
-        GameObject SingletonObject = new GameObject("UISingleton");
-        DontDestroyOnLoad(SingletonObject);
-        return SingletonObject.AddComponent<UILokingSingleton>();
     }
 	
     public void OpenLevel(int Level)
