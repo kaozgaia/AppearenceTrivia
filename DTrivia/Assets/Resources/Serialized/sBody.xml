@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<SBodyCollection xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <sBody>
+    <Body>
+      <type>true</type>
+      <gender>H</gender>
+      <name>body1</name>
+    </Body>
+    <Body>
+      <type>true</type>
+      <gender>H</gender>
+      <name>body2</name>
+    </Body>
+  </sBody>
+</SBodyCollection>
