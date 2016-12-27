@@ -29,7 +29,7 @@ TextureImporter:
   cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: -2
-  maxTextureSize: 8192
+  maxTextureSize: 1024
   textureSettings:
     filterMode: 0
     aniso: 16
@@ -63,10 +63,10 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -60, y: 63}
-        - {x: -60, y: -63}
-        - {x: 60, y: -63}
-        - {x: 60, y: 63}
+      - - {x: -32.023834, y: 34.3031}
+        - {x: -32.023834, y: -33.6969}
+        - {x: 32.976166, y: -33.6969}
+        - {x: 32.976166, y: 34.3031}
     - name: Sam
       rect:
         serializedVersion: 2
@@ -78,10 +78,10 @@ TextureImporter:
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline:
-      - - {x: -59.5, y: 63}
-        - {x: -59.5, y: -63}
-        - {x: 59.5, y: -63}
-        - {x: 59.5, y: 63}
+      - - {x: -31.768463, y: 35.33618}
+        - {x: -31.768463, y: -33.66382}
+        - {x: 32.231537, y: -33.66382}
+        - {x: 32.231537, y: 35.33618}
     outline: []
   spritePackingTag: 
   userData: 

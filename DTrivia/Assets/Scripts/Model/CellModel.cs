@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Assets.Scripts.Model
+
+
+public class CellModel
 {
-    public class CellModel
+    public CellModel()
     {
-        public CellModel()
-        {
 
-        }
-
-        public bool IsAssert { get; set; }
     }
+
+    public bool IsAssert { get; set; }
 }
+

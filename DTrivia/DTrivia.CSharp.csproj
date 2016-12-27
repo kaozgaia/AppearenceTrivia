@@ -69,18 +69,20 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\Scripts\Common\Constants.cs" />
     <Compile Include="Assets\Scripts\Common\Enum.cs" />
     <Compile Include="Assets\Scripts\Common\UILokingSingleton.cs" />
+    <Compile Include="Assets\Scripts\Data\ComponentRegister.cs" />
     <Compile Include="Assets\Scripts\MainGame\EndlessController.cs" />
     <Compile Include="Assets\Scripts\MainGame\GridCellController.cs" />
     <Compile Include="Assets\Scripts\MainGame\Procedural2DGrid.cs" />
     <Compile Include="Assets\Scripts\MainMenu\UIController.cs" />
     <Compile Include="Assets\Scripts\Model\CellModel.cs" />
+    <Compile Include="Assets\Scripts\Model\ComponentModel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assets\Resources\Hombre\h.txt" />
-    <None Include="Assets\Resources\Mujer\m.txt" />
-    <None Include="Assets\Resources\Serialized\sBody.xml" />
+    <None Include="Assets\Resources\Hombre\sMaleBody.xml" />
+    <None Include="Assets\Resources\Mujer\sFemaleBody.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\SyntaxTree\UnityVS\2015\UnityVS.CSharp.targets" />
 </Project>
