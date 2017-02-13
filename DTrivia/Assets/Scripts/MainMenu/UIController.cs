@@ -7,7 +7,11 @@ public class UIController : MonoBehaviour {
 
     public void GoMainGame()
     {
-        UILokingSingleton.Instance.OpenLevel((int)PublicEnum.eLevel.MainMenu);
+        UILokingSingleton.Instance.OpenLevel((int)eLevel.MainMenu);
     }
 	
+    public void SetUpGame(int columns, int rows)
+    {
+
+    }
 }

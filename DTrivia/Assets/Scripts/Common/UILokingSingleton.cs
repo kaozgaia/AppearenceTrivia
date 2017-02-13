@@ -27,6 +27,7 @@ public class UILokingSingleton : MonoBehaviour {
             DestroyImmediate(gameObject);
             return;
         }
+        ComponentRegister.Init();
         instance = this;
         DontDestroyOnLoad(gameObject);
         _PanelActivity.SetActive(false);

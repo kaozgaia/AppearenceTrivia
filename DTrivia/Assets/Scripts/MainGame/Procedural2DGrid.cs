@@ -1,19 +1,17 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.UI;
+using Utils;
 
 public class Procedural2DGrid : MonoBehaviour {
     [SerializeField]
     private int rowSize, columnSize;
     private bool _lock;
-    private float baseProb, probAdd;
-    private ComponentRegister Components;    
-    //private int referenceType = 0;
-    //private bool referenceChange = false;
+    private float baseProb, probAdd;      
     private List<int> registeredComponents = new List<int>();
     private List<int> registeredComponentsGoodChoice = new List<int>();
-    //Sprite[] imgArray;
 
     public RectTransform panelRow;
     public GameObject gridCell;
@@ -23,8 +21,7 @@ public class Procedural2DGrid : MonoBehaviour {
     public void Init(int rSize, int cSize)
     {
         rowSize = rSize;
-        columnSize = cSize;
-        Components = new ComponentRegister();         
+        columnSize = cSize;              
         GenerateGrid();        
     }
 
@@ -49,8 +46,7 @@ public class Procedural2DGrid : MonoBehaviour {
         _lock = false;
         ClearGrid();        
         GameObject cellInputField;
-        RectTransform rowParent;
-        //imgArray = Resources.LoadAll<Sprite>("sdvSpriteSheet");
+        RectTransform rowParent;        
         if(rowSize == 2 && columnSize == 2)
         {
             baseProb = 0.3f;
@@ -117,7 +113,7 @@ public class Procedural2DGrid : MonoBehaviour {
             {
                 Image imgRender = _controller.Components[i].AddComponent<Image>();
                 imgRender.preserveAspect = true;
-                imgRender.sprite = Resources.Load<Sprite>(ComponentRegister.GeneralRegister[i][registeredComponentsGoodChoice[i]]);                
+                imgRender.sprite = Resources.Load<Sprite>(Constants.ResourcesPath + ComponentRegister.GeneralRegister[i][registeredComponentsGoodChoice[i]].Name);                
             }
             
             
@@ -128,7 +124,7 @@ public class Procedural2DGrid : MonoBehaviour {
             {
                 Image imgRender = _controller.Components[i].AddComponent<Image>();
                 imgRender.preserveAspect = true;
-                imgRender.sprite = Resources.Load<Sprite>(ComponentRegister.GeneralRegister[i][registeredComponents[i]]);
+                imgRender.sprite = Resources.Load<Sprite>(Constants.ResourcesPath + ComponentRegister.GeneralRegister[i][registeredComponents[i]].Name);
             }
 
         }        
@@ -141,12 +137,28 @@ public class Procedural2DGrid : MonoBehaviour {
         {
             for (int i = 0; i < ComponentRegister.GeneralRegister.Count; i++)
             {
-                registeredComponents.Add((int)Random.Range(0, ComponentRegister.GeneralRegister[i].Count-1));                
+                
+                if (ComponentRegister.GeneralRegister[i][0].Type == eClothType.Cabello)
+                {
+                    registeredComponents.Add(registeredComponents[0]);
+                }
+                else if(ComponentRegister.GeneralRegister[i][0].Type == eClothType.Orejas)
+                {
+                    float randomNumber = Random.Range(0,1);
+                    if(randomNumber < 0.33f) registeredComponents.Add(registeredComponents[1]);
+                    else if(randomNumber < 0.66f) registeredComponents.Add(registeredComponents[1]+ ComponentRegister.GeneralRegister[i].Count);
+                    else registeredComponents.Add(registeredComponents[1] + (ComponentRegister.GeneralRegister[i].Count*2));
+                }
+                else
+                {
+                    int selectedIndex = (int)Random.Range(0, ComponentRegister.GeneralRegister[i].Count - 1);
+                    registeredComponents.Add(selectedIndex);
+                }
             }
         }
         else
         {
-            //registeredComponentsGoodChoice = registeredComponents;
+            float baseProbChange = 0.05f;
             for (int i = 0; i < registeredComponents.Count; i++) registeredComponentsGoodChoice.Add(registeredComponents[i]);
             bool _hasDecidePart = false;
             int ctxCounter = 0;
@@ -155,37 +167,37 @@ public class Procedural2DGrid : MonoBehaviour {
                 if (ctxCounter >= registeredComponents.Count-1)
                 {
                     // Se recorrio todo el array sin escojer un componente a cambiar
-                    int newComponent;
-                    do
-                    {
-                        newComponent = (int)Random.Range(0, ComponentRegister.GeneralRegister[ctxCounter].Count-1);
-                    } while (newComponent == registeredComponentsGoodChoice[ctxCounter]);
-                    registeredComponentsGoodChoice[ctxCounter] = newComponent;
+                    registeredComponentsGoodChoice[ctxCounter] = GetNewComponentIndex(ctxCounter);
                     _hasDecidePart = true;
                 }
                 else
                 {
                     //TODO: Aplicar Reglas de dificultad
                     float rand = Random.Range(0f, 1f);
-                    if (rand < 0.05f)
+                    if (rand < baseProbChange)
                     {
-                        int newComponent;
-                        do
-                        {
-                            newComponent = (int)Random.Range(0, ComponentRegister.GeneralRegister[ctxCounter].Count-1);
-                        } while (newComponent == registeredComponentsGoodChoice[ctxCounter]);
-                        registeredComponentsGoodChoice[ctxCounter] = newComponent;
-                        
+                        registeredComponentsGoodChoice[ctxCounter] = GetNewComponentIndex(ctxCounter);
                         _hasDecidePart = true;
                     }
                     else
                     {
+                        baseProbChange += 0.025f;
                         ctxCounter++;
                     }
                 }
             } while (!_hasDecidePart);
             
         }        
+    }
+
+    private int GetNewComponentIndex(int ctxCounter)
+    {
+        int newComponent;
+        do
+        {
+            newComponent = (int)Random.Range(0, ComponentRegister.GeneralRegister[ctxCounter].Count - 1);
+        } while (newComponent == registeredComponentsGoodChoice[ctxCounter]);
+        return newComponent;
     }
 
     
