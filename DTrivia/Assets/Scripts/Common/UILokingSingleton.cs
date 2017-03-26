@@ -46,7 +46,7 @@ public class UILokingSingleton : MonoBehaviour {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
-    void OnLevelWasLoaded(int Level)
+    void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         HideProgress();
     }

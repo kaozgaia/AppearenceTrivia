@@ -4,7 +4,12 @@ using System;
 
 namespace Utils
 {
-          
+    public enum eGameState
+    {
+        onMenus,
+        playing,
+        pause
+    }  
 
     public enum eLevel
     {

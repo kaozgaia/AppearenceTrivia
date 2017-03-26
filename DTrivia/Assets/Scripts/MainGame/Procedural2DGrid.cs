@@ -20,17 +20,19 @@ public class Procedural2DGrid : MonoBehaviour {
 
     public void Init(int rSize, int cSize)
     {
+        if (Grid.childCount > 0) ClearGrid();
         rowSize = rSize;
         columnSize = cSize;              
-        GenerateGrid();        
+        if(Grid.childCount == 0)GenerateGrid();        
     }
 
-    void ClearGrid()
+    public void ClearGrid()
     {
         for (int i = 0; i < Grid.childCount; i++)
         {
-            Destroy(Grid.GetChild(i).gameObject);
+            Destroy(Grid.GetChild(i).gameObject);            
         }
+        GenerateGrid();
     }
 
     void GenerateGrid()
@@ -42,9 +44,8 @@ public class Procedural2DGrid : MonoBehaviour {
         //Arreglo con datos de la unica opcion valida
         GenerateMultiImageObject(false);
 
-
         _lock = false;
-        ClearGrid();        
+                
         GameObject cellInputField;
         RectTransform rowParent;        
         if(rowSize == 2 && columnSize == 2)
@@ -72,15 +73,16 @@ public class Procedural2DGrid : MonoBehaviour {
             for (int colIndex = 0; colIndex < columnSize; colIndex++)
             {
                 cellInputField = GenerateGameCell(gridCell, colIndex, rowIndex);
+                if (cellInputField.GetComponent<GridCellController>().Data.IsAssert && EndlessController.Instance != null) EndlessController.Instance.GRBox = cellInputField;
                 cellInputField.transform.SetParent(rowParent);
                 cellInputField.GetComponent<Transform>().localScale = Vector3.one;
             }
         }
+        EndlessController.Instance.isReloadingGrid = false;
     }
 
     GameObject GenerateGameCell(GameObject prefab, int colIndex, int rowIndex)
-    {
-        
+    {        
         GameObject newCell = (GameObject)Instantiate(prefab);
         GridCellController _controller = newCell.GetComponent<GridCellController>();        
         if(!_lock)
